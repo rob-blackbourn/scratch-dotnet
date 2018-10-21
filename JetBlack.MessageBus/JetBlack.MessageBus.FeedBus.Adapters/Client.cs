@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using JetBlack.MessageBus.Common.IO;
 using JetBlack.MessageBus.FeedBus.Adapters.Configuration;
 using JetBlack.MessageBus.FeedBus.Messages;
+using Microsoft.Extensions.Configuration;
 
 namespace JetBlack.MessageBus.FeedBus.Adapters
 {
@@ -15,10 +16,14 @@ namespace JetBlack.MessageBus.FeedBus.Adapters
     {
         public static Client Create(string name)
         {
-            var configSection = FeedBusSection.GetSection();
-            var config = configSection.Connections[name];
-            var endPoint = new IPEndPoint(config.Address, config.Port);
-            var byteEncoder = (IByteEncoder)Activator.CreateInstance(config.ByteEncoderType);
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build()
+                .Get<FeedBusConfig>();
+
+            var connectionConfig = config.Connections[name];
+            var endPoint = new IPEndPoint(connectionConfig.Address, connectionConfig.Port);
+            var byteEncoder = (IByteEncoder)Activator.CreateInstance(connectionConfig.ByteEncoderType);
             return Create(endPoint, byteEncoder);
         }
 

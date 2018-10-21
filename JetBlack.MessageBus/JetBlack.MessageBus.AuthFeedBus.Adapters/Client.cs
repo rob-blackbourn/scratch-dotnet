@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using JetBlack.MessageBus.Common.IO;
 using JetBlack.MessageBus.AuthFeedBus.Adapters.Configuration;
 using JetBlack.MessageBus.AuthFeedBus.Messages;
+using Microsoft.Extensions.Configuration;
 
 namespace JetBlack.MessageBus.AuthFeedBus.Adapters
 {
@@ -17,10 +18,14 @@ namespace JetBlack.MessageBus.AuthFeedBus.Adapters
     {
         public static Client Create(string name)
         {
-            var configSection = AuthFeedBusSection.GetSection();
-            var config = configSection.Connections[name];
-            var endPoint = new IPEndPoint(config.Address, config.Port);
-            var byteEncoder = (IByteEncoder)Activator.CreateInstance(config.ByteEncoderType);
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+            var config = configuration.Get<AuthFeedBusConfig>();
+            
+            var connectionConfig = config.Connections[name];
+            var endPoint = new IPEndPoint(connectionConfig.Address, connectionConfig.Port);
+            var byteEncoder = (IByteEncoder)Activator.CreateInstance(connectionConfig.ByteEncoderType);
             return Create(endPoint, byteEncoder);
         }
 

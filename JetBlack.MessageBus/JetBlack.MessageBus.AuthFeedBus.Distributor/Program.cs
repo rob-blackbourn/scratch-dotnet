@@ -4,6 +4,7 @@ using System.ServiceProcess;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using log4net;
+using JetBlack.MessageBus.AuthFeedBus.Distributor.Configuration;
 
 [assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.debug.config")]
 
@@ -29,14 +30,16 @@ namespace JetBlack.MessageBus.AuthFeedBus.Distributor
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             var programArgs = ProgramArgs.Parse(args);
 
-            var builder = new ConfigurationBuilder();
-            builder.AddJsonFile("appsettings.json");
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+            var config = configuration.Get<DistributorConfig>();
 
             var distributorRole = config.ToDistributorRole();
             var endPoint = new IPEndPoint(config.Address, config.Port);
 
             var server = new Server(endPoint, distributorRole);
-            server.Start(config.HeartbeaInterval);
+            server.Start(config.HeartbeatInterval);
 
             return server;
         }

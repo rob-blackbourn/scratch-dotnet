@@ -5,7 +5,7 @@ using System.Net;
 
 namespace JetBlack.MessageBus.FeedBus.Distributor.Configuration
 {
-    public class DistributorSection
+    public class DistributorConfig
     {
         public IPAddress Address {get;set;}
         public int Port {get;set;}
