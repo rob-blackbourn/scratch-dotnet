@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\JetBlack.MessageBus.Common\JetBlack.MessageBus.Common.csproj" />
+    <ProjectReference Include="..\JetBlack.MessageBus.FeedBus.Messages\JetBlack.MessageBus.FeedBus.Messages.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>

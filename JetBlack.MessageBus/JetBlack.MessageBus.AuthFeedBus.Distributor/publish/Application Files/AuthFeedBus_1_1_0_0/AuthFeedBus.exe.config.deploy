@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+
+  <configSections>
+    <section name="distributor" type="JetBlack.MessageBus.AuthFeedBus.Distributor.Configuration.DistributorSection, AuthFeedBus" />
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
+  </configSections>
+
+  <distributor address="Any" port="9092" allow="All" deny="None">
+  	<feedRoles>
+  		<feedRole feed="LSE" allow="None" deny="None" requiresEntitlement="true">
+  			<interactorRoles>
+  				<interactorRole address="Loopback" user="PCESERVICES\rob.blackbourn" allow="All" deny="None"/>
+  			</interactorRoles>
+  		</feedRole>
+  	</feedRoles>
+  </distributor>
+
+  <log4net>
+  	<appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+  		<file value="D:\Logs\AuthFeedBus.txt"/>
+  		<appendToFile value="true"/>
+  		<maxSizeRollBackups value="10"/>
+  		<maximumFileSize value="100MB"/>
+  		<rollingStyle value="Size"/>
+  		<datePattern value="yyyyMMdd"/>
+  		<layout type="log4net.Layout.PatternLayout">
+  			<conversionPattern value="%date [%thread] %-5level %logger [%method] - %message%newline"/>
+  		</layout>
+  	</appender>
+  	<appender name="DebugAppender" type="log4net.Appender.DebugAppender">
+  		<layout type="log4net.Layout.PatternLayout">
+  			<conversionPattern value="%date [%thread] %-5level %logger [%method] - %message%newline"/>
+  		</layout>
+  	</appender>
+  	<appender name="ConsoleAppender" type="log4net.Appender.ConsoleAppender">
+  		<layout type="log4net.Layout.PatternLayout">
+  			<conversionPattern value="%date [%thread] %-5level %logger [%method] - %message%newline"/>
+  		</layout>
+  	</appender>
+  	<root>
+  		<level value="ALL"/>
+  		<appender-ref ref="RollingLogFileAppender"/>
+  		<appender-ref ref="ConsoleAppender"/>
+  		<appender-ref ref="DebugAppender"/>
+  	</root>
+  </log4net>
+
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.6" />
+  </startup>
+
+</configuration>
