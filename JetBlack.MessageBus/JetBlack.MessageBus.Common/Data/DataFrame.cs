@@ -88,7 +88,7 @@ namespace JetBlack.MessageBus.Common.Data
         /// <summary>
         /// A row enumeration
         /// </summary>
-        public IEnumerable<KeyValuePair<string, object[]>> Rows => Enumerable.Range(0, Count).Select(r => KeyValuePair.Create(RowHeaders.Count == 0 ? null : RowHeaders[r], Columns.Select(column => column[r]).ToArray()));
+        public IEnumerable<KeyValuePair<string, object[]>> Rows => Enumerable.Range(0, Count).Select(r => new KeyValuePair<string, object[]>(RowHeaders.Count == 0 ? null : RowHeaders[r], Columns.Select(column => column[r]).ToArray()));
 
         /// <summary>
         /// Add a new row.

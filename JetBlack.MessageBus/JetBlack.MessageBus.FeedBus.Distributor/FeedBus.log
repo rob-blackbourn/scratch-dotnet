@@ -1,0 +1,4 @@
+2018-10-23 08:05:38,244 [1] INFO  JetBlack.MessageBus.FeedBus.Distributor.Server [?] - Starting server 1.0.0.0
+2018-10-23 08:05:38,290 [1] INFO  JetBlack.MessageBus.FeedBus.Distributor.Server [?] - Server started
+2018-10-23 08:06:08,302 [4] DEBUG JetBlack.MessageBus.FeedBus.Distributor.Server [?] - Sending heartbeat
+2018-10-23 08:06:08,312 [5] DEBUG JetBlack.MessageBus.FeedBus.Distributor.Server [?] - OnMessage(sender=, message=MessageType=MulticastData, Feed=__admin__, Topic=heartbeat, IsImage=True, Data=

@@ -203,7 +203,7 @@ namespace JetBlack.MessageBus.Common.Linq
         {
             return source
                 .Fill(Range.Create(firstDate, lastDate).AsEnumerable(x => x.AddDays(1)), x => x.Key, x => (double?) x.Value, _ => null)
-                .RollingAggregation(days, window => KeyValuePair.Create(window[window.Count - 1].Key, window.Average(x => x.Value)));
+                .RollingAggregation(days, window => new KeyValuePair<DateTime,double?>(window[window.Count - 1].Key, window.Average(x => x.Value)));
         }
 
         /// <summary>

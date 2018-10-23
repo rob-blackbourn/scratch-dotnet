@@ -98,7 +98,7 @@ namespace JetBlack.MessageBus.Common.Linq
         /// <returns>The created dictionary</returns>
         public static IEnumerable<KeyValuePair<TKey, TValue>> AsKeyValuePairs<TSource, TKey, TValue>(this IEnumerable<TSource> source, Func<TSource, int, TKey> keySelector, Func<TSource, int, TValue> valueSelector)
         {
-            return source.Select((x, i) => KeyValuePair.Create(keySelector(x, i), valueSelector(x, i)));
+            return source.Select((x, i) => new KeyValuePair<TKey,TValue>(keySelector(x, i), valueSelector(x, i)));
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace JetBlack.MessageBus.Common.Linq
             TValue value;
             foreach (var key in keys)
                 if (dictionary.TryGetValue(key, out value))
-                    yield return KeyValuePair.Create(key, value);
+                    yield return new KeyValuePair<TKey, TValue>(key, value);
         }
 
         /// <summary>

@@ -7,8 +7,8 @@ namespace JetBlack.MessageBus.FeedBus.Distributor.Configuration
 {
     public class DistributorConfig
     {
-        public IPAddress Address {get;set;}
+        public string Address {get;set;}
         public int Port {get;set;}
-        public TimeSpan HeartbeaInterval {get;set;}
+        public TimeSpan HeartbeatInterval {get;set;}
     }
 }

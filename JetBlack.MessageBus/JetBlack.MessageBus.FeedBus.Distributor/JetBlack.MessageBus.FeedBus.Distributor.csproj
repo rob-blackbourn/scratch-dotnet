@@ -1,6 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\JetBlack.MessageBus.Common\JetBlack.MessageBus.Common.csproj" />
     <ProjectReference Include="..\JetBlack.MessageBus.FeedBus.Messages\JetBlack.MessageBus.FeedBus.Messages.csproj" />
   </ItemGroup>

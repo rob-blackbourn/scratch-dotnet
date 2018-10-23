@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Net;
 using System.ServiceProcess;
-using JetBlack.MessageBus.FeedBus.Distributor.Configuration;
 using log4net;
 using Microsoft.Extensions.Configuration;
+using JetBlack.MessageBus.Common;
+using JetBlack.MessageBus.FeedBus.Distributor.Configuration;
 
-[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.Devlopment.config")]
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
 
 namespace JetBlack.MessageBus.FeedBus.Distributor
 {
@@ -26,17 +27,17 @@ namespace JetBlack.MessageBus.FeedBus.Distributor
         static Server CreateServer(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            var programArgs = ProgramArgs.Parse(args);
 
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.Development.json")
+                .AddJsonFile("appsettings.json")
                 .Build();
-            var config = configuration.Get<DistributorConfig>();
+            var distributorSection = configuration.GetSection("distributor");
+            var distributorConfig = distributorSection.Get<DistributorConfig>();
 
-            var endPoint = new IPEndPoint(config.Address, config.Port);
+            var endPoint = new IPEndPoint(distributorConfig.Address.AsIPAddress(), distributorConfig.Port);
 
             var server = new Server(endPoint);
-            server.Start(config.HeartbeaInterval);
+            server.Start(distributorConfig.HeartbeatInterval);
 
             return server;
         }
